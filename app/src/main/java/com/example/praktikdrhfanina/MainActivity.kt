@@ -1,5 +1,6 @@
 package com.example.praktikdrhfanina
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -16,5 +17,10 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+        // Navigate to Patient Management Activity
+        val intent = Intent(this, PatientManagementActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 }
