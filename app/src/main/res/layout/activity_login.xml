@@ -50,7 +50,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
-                style="@style/Widget.Material3.TextInputLayout.OutlinedBox.Dense"
+                style="@style/CustomTextInputLayout"
                 >
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -73,7 +73,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
                 app:passwordToggleEnabled="true"
-                style="@style/Widget.Material3.TextInputLayout.OutlinedBox.Dense">
+                app:endIconTint="@color/orange"
+                style="@style/CustomTextInputLayout">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/editTextPassword"
