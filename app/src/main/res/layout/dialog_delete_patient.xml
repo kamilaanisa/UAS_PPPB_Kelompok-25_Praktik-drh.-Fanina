@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:padding="24dp">
 
@@ -31,21 +32,25 @@
         android:orientation="horizontal">
 
         <Button
+            style="@style/Widget.AppCompat.Button"
             android:id="@+id/btnCancel"
             android:layout_width="wrap_content"
             android:layout_height="48dp"
             android:layout_marginEnd="12dp"
-            android:background="@drawable/bg_button_cancel"
+            app:backgroundTint="@color/white"
+            app:backgroundOutlineColor="@color/shadow"
+
             android:fontFamily="@font/plus_jakarta_sans_bold"
             android:text="Batal"
             android:textColor="#333333"
             android:textSize="14sp" />
 
         <Button
+            style="@style/Widget.AppCompat.Button"
             android:id="@+id/btnDelete"
             android:layout_width="wrap_content"
             android:layout_height="48dp"
-            android:background="@drawable/bg_button_danger"
+            app:backgroundTint="@color/red"
             android:fontFamily="@font/plus_jakarta_sans_bold"
             android:text="Hapus"
             android:textColor="@color/white"

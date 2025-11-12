@@ -46,10 +46,11 @@
             </LinearLayout>
 
             <Button
+                style="@style/Widget.AppCompat.Button"
                 android:id="@+id/btnAddPatient"
                 android:layout_width="wrap_content"
                 android:layout_height="48dp"
-                android:background="@drawable/bg_button_primary"
+                app:backgroundTint="@color/primary_blue"
                 android:drawableLeft="@drawable/ic_add"
                 android:drawablePadding="8dp"
                 android:fontFamily="@font/plus_jakarta_sans_bold"

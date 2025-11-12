@@ -147,6 +147,7 @@
         android:orientation="horizontal">
 
         <Button
+            style="@style/Widget.AppCompat.Button"
             android:id="@+id/btnCancel"
             android:layout_width="wrap_content"
             android:layout_height="48dp"
@@ -158,10 +159,11 @@
             android:textSize="14sp" />
 
         <Button
+            style="@style/Widget.AppCompat.Button"
             android:id="@+id/btnSave"
             android:layout_width="wrap_content"
             android:layout_height="48dp"
-            android:background="@drawable/bg_button_primary"
+            app:backgroundTint="@color/primary_blue"
             android:fontFamily="@font/plus_jakarta_sans_bold"
             android:text="Simpan"
             android:textColor="@color/white"
