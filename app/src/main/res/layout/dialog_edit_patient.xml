@@ -123,24 +123,27 @@
         android:gravity="end"
         android:orientation="horizontal">
 
-        <Button
-            style="@style/Widget.AppCompat.Button"
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btnCancel"
             android:layout_width="wrap_content"
             android:layout_height="48dp"
             android:layout_marginEnd="12dp"
             app:backgroundTint="@color/white"
+            app:cornerRadius="6dp"
+            app:elevation="4dp"
+            app:strokeColor="#E0E0E0"
+            app:strokeWidth="1dp"
             android:fontFamily="@font/plus_jakarta_sans_bold"
             android:text="Batal"
             android:textColor="#333333"
             android:textSize="14sp" />
 
-        <Button
-            style="@style/Widget.AppCompat.Button"
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btnSave"
             android:layout_width="wrap_content"
             android:layout_height="48dp"
             app:backgroundTint="@color/primary_blue"
+            app:cornerRadius="6dp"
             android:fontFamily="@font/plus_jakarta_sans_bold"
             android:text="Simpan Perubahan"
             android:textColor="@color/white"

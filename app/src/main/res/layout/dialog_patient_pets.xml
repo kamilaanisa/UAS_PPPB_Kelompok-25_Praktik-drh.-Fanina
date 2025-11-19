@@ -81,14 +81,14 @@
             android:textSize="16sp" />
     </LinearLayout>
 
-    <Button
-        style="@style/Widget.AppCompat.Button"
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btnClose"
         android:layout_width="wrap_content"
         android:layout_height="48dp"
         android:layout_gravity="end"
         android:layout_marginTop="24dp"
         app:backgroundTint="@color/button_close"
+        app:cornerRadius="6dp"
         android:fontFamily="@font/plus_jakarta_sans_bold"
         android:text="Tutup"
         android:textColor="@color/white"
