@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<<<<<<< HEAD
 <font-family xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <font
@@ -7,3 +8,16 @@
 
 
 </font-family>
+=======
+<font-family xmlns:android="http://schemas.android.com/apk/res/android">
+    <font
+        android:fontStyle="normal"
+        android:fontWeight="400"
+        android:font="@font/plus_jakarta_sans_regular" />
+    <font
+        android:fontStyle="normal"
+        android:fontWeight="700"
+        android:font="@font/plus_jakarta_sans_bold" />
+</font-family>
+
+>>>>>>> falah/manajemen_pasien

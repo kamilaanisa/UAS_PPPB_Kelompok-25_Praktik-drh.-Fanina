@@ -1,36 +1,89 @@
 package com.example.praktikdrhfanina
 
-import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import android.content.Intent
-import android.widget.TextView
-
+import android.os.Bundle
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
+import com.example.praktikdrhfanina.databinding.ActivityLoginBinding
+import com.example.praktikdrhfanina.model.LoginRequest
+import kotlinx.coroutines.launch
+import com.example.praktikdrhfanina.model.LoginResponse
+import com.example.praktikdrhfanina.network.ApiClient
 
 class LoginActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivityLoginBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login)
+        binding = ActivityLoginBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        // Buat sembunyikan Action Bar di atas
         supportActionBar?.hide()
 
-        //Buat cari komponen TextView "Daftar sekarang" berdasarkan ID
-        val textDaftar: TextView = findViewById(R.id.textDaftarSekarang)
+        with(binding) {
+            buttonLogin.setOnClickListener {
+                val email = editTextEmail.text.toString()
+                val password = editTextPassword.text.toString()
 
-        // Buat bisa di-klik
-        textDaftar.setOnClickListener {
-            // Buat Intent untuk pindah ke RegisterActivity
-            val intent = Intent(this, RegisterActivity::class.java)
-            startActivity(intent)
-            //   halaman login tidak di-finish(), biar bisa balik lagi
+                if (email.isEmpty() || password.isEmpty()) {
+                    Toast.makeText(
+                        this@LoginActivity,
+                        "Email dan password tidak boleh kosong",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    return@setOnClickListener
+                }
+
+                lifecycleScope.launch {
+                    try {
+                        val response = ApiClient.getInstance().login(LoginRequest(email, password))
+
+                        if (response.isSuccessful && response.body() != null) {
+                            val loginData = response.body()!!
+                            saveToken(loginData.token)
+
+                            Toast.makeText(
+                                this@LoginActivity,
+                                "Login berhasil",
+                                Toast.LENGTH_SHORT
+                            ).show()
+
+                            val intent = Intent(this@LoginActivity, MainActivity::class.java)
+                            startActivity(intent)
+                            finish()
+                        } else {
+                            Toast.makeText(
+                                this@LoginActivity,
+                                "Login gagal",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    } catch (e: Exception) {
+                        Toast.makeText(
+                            this@LoginActivity,
+                            "Gagal terhubung ke server: ${e.message}",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+            }
+
+            buttonGoogle.setOnClickListener {
+                val intent = Intent(this@LoginActivity, MainActivity::class.java)
+                startActivity(intent)
+            }
+
+            textDaftarSekarang.setOnClickListener {
+                val intent = Intent(this@LoginActivity, RegisterActivity::class.java)
+                startActivity(intent)
+            }
         }
+    }
 
-        // ---
-        // di sini  buat bang rakai tambahin kode untuk buttonLogin.setOnClickListener
-        // yang terhubung ke backend, SEMANGAT BE!! hehehehheeh
-        // ---
+    private fun saveToken(token: String) {
+        val sharedPref = getSharedPreferences("APP_PREFS", MODE_PRIVATE)
+        sharedPref.edit().putString("TOKEN", token).apply()
     }
 }
