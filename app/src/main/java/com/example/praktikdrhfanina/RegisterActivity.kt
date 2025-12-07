@@ -2,6 +2,7 @@ package com.example.praktikdrhfanina
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
@@ -32,6 +33,7 @@ class RegisterActivity : AppCompatActivity() {
             val username = binding.editTextUsername.text.toString().trim()
             val email = binding.editTextEmail.text.toString().trim()
             val password = binding.editTextPassword.text.toString().trim()
+            val phoneNumber = ""
 
             // Validasi input sederhana
             if (username.isEmpty() || email.isEmpty() || password.isEmpty()) {
@@ -45,10 +47,14 @@ class RegisterActivity : AppCompatActivity() {
                         token = "Bearer YOUR_ADMIN_TOKEN", // pakai token admin jika diperlukan
                         request = CreatePatientRequest(
                             username = username,
+                            phoneNumber = phoneNumber,
                             email = email,
                             password = password
                         )
                     )
+
+                    val statusCode = response.code()
+                    Log.d("CekStatusServer", "Register Response Code: $statusCode")
 
                     if (response.isSuccessful && response.body() != null) {
                         Toast.makeText(this@RegisterActivity, "Register berhasil", Toast.LENGTH_SHORT).show()

@@ -1,19 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-<<<<<<< HEAD
+
     <color name="text_link">#6AC1FF</color>
     <color name="orange">#FFAB2F</color>
-=======
     <color name="primary_blue">#0081DD</color>
     <color name="dark_blue">#1976D2</color>
     <color name="light_gray">#F5F5F5</color>
     <color name="gray">#9E9E9E</color>
     <color name="dark_gray">#757575</color>
     <color name="red">#ED4264</color>
-    <color name="orange">#FFAB2F</color>
     <color name="sidebar_bg">#2D3E50</color>
     <color name="sidebar_active">#3A9DBF</color>
     <color name="text_primary">#333333</color>

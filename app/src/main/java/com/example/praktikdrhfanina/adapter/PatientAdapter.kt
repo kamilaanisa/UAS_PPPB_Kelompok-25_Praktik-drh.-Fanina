@@ -18,10 +18,10 @@ class PatientAdapter(
 
         fun bind(patient: User) {
             binding.apply {
-                tvPatientName.text = patient.fullName
+                tvPatientName.text = patient.username
                 tvPhoneNumber.text = patient.phoneNumber
                 tvEmail.text = patient.email
-                tvCreatedDate.text = patient.createdDate
+                tvCreatedDate.text = patient.createdAt
 
                 btnEdit.setOnClickListener { onEditClick(patient) }
                 btnDelete.setOnClickListener { onDeleteClick(patient) }
