@@ -18,21 +18,27 @@ interface ApiService {
         @Body request: LoginRequest
     ): Response<LoginResponse>
 
-    @GET("patients")
+    @GET("api/patients")
     suspend fun getAllPatients(
         @Header("Authorization") token: String
     ): Response<List<User>>
 
-    @POST("patients")
+    @POST("api/patients")
     suspend fun createPatient(
         @Header("Authorization") token: String,
         @Body request: CreatePatientRequest
     ): Response<User>
 
-    @PUT("patients/{id}")
+    @PUT("api/patients/{id}")
     suspend fun updatePatient (
         @Header("Authorization") token: String,
         @Path("id") patientId: Int,
         @Body request: UpdatePatientRequest
     ): Response<User>
+
+    @DELETE("api/patients/{id}")
+    suspend fun deletePatient(
+        @Header("Authorization") token: String,
+        @Path("id") patientId: Int
+    ): Response<Void>
 }

@@ -94,7 +94,9 @@ class LoginActivity : AppCompatActivity() {
     // Fungsi Simpan Token ke SharedPreferences
     private fun saveToken(token: String) {
         val sharedPref = getSharedPreferences("APP_PREFS", MODE_PRIVATE)
-        sharedPref.edit().putString("TOKEN", token).apply()
+        // Gunakan commit() biar dia nunggu sampai benar-benar tersimpan baru lanjut
+        val isSuccess = sharedPref.edit().putString("TOKEN", token).commit()
+        Log.d("TokenCheck", "Token Saved: $isSuccess | Token: $token")
     }
 
     // Fungsi Simpan Data User ke SharedPreferences

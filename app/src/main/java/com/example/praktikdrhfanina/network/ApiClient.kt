@@ -7,7 +7,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object ApiClient {
     // Pastikan link ini sudah HTTPS (ngrok punya Rakai)
-    private const val BASE_URL = "https://mickey-unmilled-spousally.ngrok-free.dev/"
+    private const val BASE_URL = "http://10.0.2.2:8000/"
 
     fun getInstance(): ApiService {
         // 1. Alat pencatat log (biar kelihatan di Logcat)

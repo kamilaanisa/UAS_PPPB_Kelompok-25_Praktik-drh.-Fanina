@@ -4,6 +4,7 @@ import android.app.Dialog
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import android.view.Window
 import android.widget.LinearLayout
@@ -45,6 +46,8 @@ class PatientManagementActivity : AppCompatActivity() {
     private fun loadPatientsFromApi() {
         val sharedPref = getSharedPreferences("APP_PREFS", MODE_PRIVATE)
         val token = sharedPref.getString("TOKEN", null)
+
+        Log.d("TokenCheck", "Di Halaman Pasien, Token isinya: $token")
 
         if (token == null) {
             Toast.makeText(this, "Token tidak ditemukan. Silahkan login kembali.", Toast.LENGTH_SHORT).show()
@@ -244,11 +247,36 @@ class PatientManagementActivity : AppCompatActivity() {
 
         dialogBinding.btnCancel.setOnClickListener { dialog.dismiss() }
         dialogBinding.btnDelete.setOnClickListener {
-            patientList.removeIf { it.id == patient.id }
-            filterPatients(binding.etSearch.text.toString())
-            Toast.makeText(this, "Pasien berhasil dihapus", Toast.LENGTH_SHORT).show()
-            dialog.dismiss()
+            val sharedPref = getSharedPreferences("APP_PREFS", MODE_PRIVATE)
+            val token = sharedPref.getString("TOKEN", null)
+
+            if (token == null) {
+                Toast.makeText(this, "Token hilang, login ulang", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            lifecycleScope.launch {
+                try {
+                    val response = ApiClient.getInstance().deletePatient(
+                        token = "Bearer $token",
+                        patientId = patient.id
+                    )
+
+                    if (response.isSuccessful) {
+                        patientList.removeIf { it.id == patient.id }
+                        filterPatients(binding.etSearch.text.toString())
+
+                        Toast.makeText(this@PatientManagementActivity, "Pasien permanen dihapus!", Toast.LENGTH_SHORT).show()
+                        dialog.dismiss()
+                    } else {
+                        Toast.makeText(this@PatientManagementActivity, "Gagal menghapus: ${response.code()}", Toast.LENGTH_SHORT).show()
+                    }
+                } catch (e: Exception) {
+                    Toast.makeText(this@PatientManagementActivity, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
+                }
+            }
         }
+
 
         dialog.show()
     }
