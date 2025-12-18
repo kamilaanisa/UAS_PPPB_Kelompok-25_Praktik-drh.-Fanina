@@ -17,6 +17,7 @@ import com.example.praktikdrhfanina.adapter.PatientAdapter
 import com.example.praktikdrhfanina.databinding.*
 import com.example.praktikdrhfanina.model.CreatePatientRequest
 import com.example.praktikdrhfanina.model.Pet
+import com.example.praktikdrhfanina.model.JenisHewan
 import com.example.praktikdrhfanina.model.UpdatePatientRequest
 import com.example.praktikdrhfanina.model.User
 import com.example.praktikdrhfanina.network.ApiClient
@@ -40,6 +41,12 @@ class PatientManagementActivity : AppCompatActivity() {
 
         setupRecyclerView()
         setupListeners()
+        loadPatientsFromApi()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        // Refresh patient list when returning to this screen to reflect backend changes (e.g., new pet linked in JenisHewan)
         loadPatientsFromApi()
     }
 
@@ -294,25 +301,68 @@ class PatientManagementActivity : AppCompatActivity() {
         dialogBinding.tvDialogTitle.text = "Hewan Milik ${user.username}"
         dialogBinding.llPetList.removeAllViews()
 
-        if (user.hewans.isEmpty()) {
+        // Show a loading placeholder while fetching jenis-hewan for this patient
+        val loadingView = TextView(this)
+        loadingView.text = "Memuat..."
+        loadingView.setTextColor(resources.getColor(android.R.color.darker_gray, null))
+        loadingView.textSize = 14f
+        dialogBinding.llPetList.addView(loadingView)
+
+        val sharedPref = getSharedPreferences("APP_PREFS", MODE_PRIVATE)
+        val token = sharedPref.getString("TOKEN", null)
+        if (token == null) {
+            dialogBinding.llPetList.removeAllViews()
             val textView = TextView(this)
-            textView.text = "Belum ada hewan terdaftar"
+            textView.text = "Token hilang, silakan login ulang"
             textView.setTextColor(resources.getColor(android.R.color.darker_gray, null))
             textView.textSize = 14f
             dialogBinding.llPetList.addView(textView)
         } else {
-            user.hewans.forEach { pet ->
-                val textView = TextView(this)
-                textView.text = "${pet.nama_hewan} (${pet.jenis_hewan.nama_jenis})"
-                textView.setTextColor(resources.getColor(R.color.text_primary, null))
-                textView.textSize = 16f
-                val params = LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.WRAP_CONTENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT
-                )
-                params.topMargin = if (user.hewans.indexOf(pet) > 0) 12.dpToPx() else 0
-                textView.layoutParams = params
-                dialogBinding.llPetList.addView(textView)
+            lifecycleScope.launch {
+                try {
+                    val response = ApiClient.getInstance().getAllJenisHewan("Bearer $token")
+                    dialogBinding.llPetList.removeAllViews()
+                    if (response.isSuccessful && response.body() != null) {
+                        val jenisList = response.body()!!
+                        // Filter jenis-hewan records belonging to this patient
+                        val owned = jenisList.filter { it.id_pasien == user.id }
+                        if (owned.isEmpty()) {
+                            val textView = TextView(this@PatientManagementActivity)
+                            textView.text = "Belum ada hewan terdaftar"
+                            textView.setTextColor(resources.getColor(android.R.color.darker_gray, null))
+                            textView.textSize = 14f
+                            dialogBinding.llPetList.addView(textView)
+                        } else {
+                            owned.forEachIndexed { idx, jenis ->
+                                val textView = TextView(this@PatientManagementActivity)
+                                val jenisText = jenis.nama_jenis.ifEmpty { "(jenis tidak tersedia)" }
+                                textView.text = jenisText
+                                textView.setTextColor(resources.getColor(R.color.text_primary, null))
+                                textView.textSize = 16f
+                                val params = LinearLayout.LayoutParams(
+                                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                                    LinearLayout.LayoutParams.WRAP_CONTENT
+                                )
+                                params.topMargin = if (idx > 0) 12.dpToPx() else 0
+                                textView.layoutParams = params
+                                dialogBinding.llPetList.addView(textView)
+                            }
+                        }
+                    } else {
+                        val textView = TextView(this@PatientManagementActivity)
+                        textView.text = "Gagal memuat jenis hewan"
+                        textView.setTextColor(resources.getColor(android.R.color.darker_gray, null))
+                        textView.textSize = 14f
+                        dialogBinding.llPetList.addView(textView)
+                    }
+                } catch (e: Exception) {
+                    dialogBinding.llPetList.removeAllViews()
+                    val textView = TextView(this@PatientManagementActivity)
+                    textView.text = "Terjadi kesalahan: ${e.message}"
+                    textView.setTextColor(resources.getColor(android.R.color.darker_gray, null))
+                    textView.textSize = 14f
+                    dialogBinding.llPetList.addView(textView)
+                }
             }
         }
 

@@ -39,6 +39,10 @@
             android:name=".PatientManagementActivity"
             android:exported="false" />
 
+        <activity
+            android:name=".JenisHewanActivity"
+            android:exported="false" />
+
     </application>
 
 </manifest>

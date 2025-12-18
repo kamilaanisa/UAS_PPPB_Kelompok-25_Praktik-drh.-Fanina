@@ -19,6 +19,9 @@ data class User(
     val createdAt: String,
 
     @SerializedName("hewans")
-    val hewans: List<Pet> = emptyList()
+    val hewans: List<Pet> = emptyList(),
+
+    @SerializedName("jenis_hewan")
+    val jenis_hewan: List<JenisHewan> = emptyList()
 )
 
