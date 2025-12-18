@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="CustomTextInputLayout" parent="Widget.Material3.TextInputLayout.OutlinedBox.Dense">
+        <!-- Warna outline -->
+        <item name="boxStrokeColor">@color/orange</item>
+
+        <!-- Warna outline saat error-->
+        <item name="boxStrokeErrorColor">#B00020</item>
+
+        <!-- Warna error text-->
+        <item name="errorTextColor">#B00020</item>
+
+        <item name="boxStrokeWidth">1dp</item>
+        <item name="boxStrokeWidthFocused">1dp</item>
+    </style>
+</resources>
