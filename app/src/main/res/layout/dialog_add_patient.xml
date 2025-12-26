@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
@@ -146,22 +147,24 @@
         android:gravity="end"
         android:orientation="horizontal">
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btnCancel"
             android:layout_width="wrap_content"
             android:layout_height="48dp"
             android:layout_marginEnd="12dp"
-            android:background="@drawable/bg_button_cancel"
+            app:backgroundTint="@color/red"
+            app:cornerRadius="6dp"
             android:fontFamily="@font/plus_jakarta_sans_bold"
             android:text="Batal"
-            android:textColor="#333333"
+            android:textColor="@color/white"
             android:textSize="14sp" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btnSave"
             android:layout_width="wrap_content"
             android:layout_height="48dp"
-            android:background="@drawable/bg_button_primary"
+            app:backgroundTint="@color/primary_blue"
+            app:cornerRadius="6dp"
             android:fontFamily="@font/plus_jakarta_sans_bold"
             android:text="Simpan"
             android:textColor="@color/white"

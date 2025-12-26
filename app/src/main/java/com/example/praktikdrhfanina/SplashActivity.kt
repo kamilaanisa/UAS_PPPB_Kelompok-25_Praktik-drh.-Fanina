@@ -11,7 +11,7 @@ import android.os.Looper
 
 class SplashActivity : AppCompatActivity() {
 
-    // Waktu tunggu dalam milidetik (mis: 2500ms = 2.5 detik)
+    // ini waktunya dalam milidetik (2500ms = 2.5 detik)
     private val SPLASH_TIME_OUT: Long = 2500
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -20,16 +20,16 @@ class SplashActivity : AppCompatActivity() {
         // Menghubungkan layout XML (activity_splash.xml) ke file Kotlin ini
         setContentView(R.layout.activity_splash)
 
-        // Sembunyikan Action Bar (bar judul di atas) agar layar penuh
+        // Sembunyikan Action Bar (atas) agar layar penuh
         supportActionBar?.hide()
 
         // Handler untuk menunda perpindahan ke layar berikutnya
         Handler(Looper.getMainLooper()).postDelayed({
-            // Buat Intent untuk pindah ke MainActivity (atau layar utama Anda)
-            val intent = Intent(this, MainActivity::class.java)
+            // Buat Intent untuk pindah ke LoginActivity
+            val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
 
-            // Tutup SplashActivity agar tidak bisa kembali dengan tombol "Back"
+            // Tutup SplashActivity biar gak bisa kembali dengan tombol "Back"
             finish()
         }, SPLASH_TIME_OUT)
     }

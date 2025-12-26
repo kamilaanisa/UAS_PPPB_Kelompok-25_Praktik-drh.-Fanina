@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:padding="24dp">
 
@@ -19,7 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:fontFamily="@font/plus_jakarta_sans_regular"
-        android:text="Apakah Anda yakin ingin menghapus pasien \"Budi Santoso\"?\nTindakan ini tidak dapat dibatalkan."
+        android:text="Apakah Anda yakin ingin menghapus pasien ini?\nTindakan ini tidak dapat dibatalkan."
         android:textColor="@color/text_secondary"
         android:textSize="14sp" />
 
@@ -30,22 +31,27 @@
         android:gravity="end"
         android:orientation="horizontal">
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btnCancel"
             android:layout_width="wrap_content"
             android:layout_height="48dp"
             android:layout_marginEnd="12dp"
-            android:background="@drawable/bg_button_cancel"
+            app:backgroundTint="@color/white"
+            app:cornerRadius="6dp"
+            app:elevation="4dp"
+            app:strokeColor="#E0E0E0"
+            app:strokeWidth="1dp"
             android:fontFamily="@font/plus_jakarta_sans_bold"
             android:text="Batal"
             android:textColor="#333333"
             android:textSize="14sp" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btnDelete"
             android:layout_width="wrap_content"
             android:layout_height="48dp"
-            android:background="@drawable/bg_button_danger"
+            app:backgroundTint="@color/red"
+            app:cornerRadius="6dp"
             android:fontFamily="@font/plus_jakarta_sans_bold"
             android:text="Hapus"
             android:textColor="@color/white"
